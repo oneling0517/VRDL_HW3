@@ -177,7 +177,7 @@ class NucleusDataset(utils.Dataset):
         # "val": use hard-coded list above
         # "train": use data from stage1_train minus the hard-coded list above
         # else: use the data from the specified sub-directory
-        assert subset in ["train_set", "train", "val", "test"]
+        assert subset in ["train_set", "val", "train", "test"]
         subset_dir = "train" if subset in ["train_set", "val"] else subset
         dataset_dir = os.path.join(dataset_dir, subset_dir)
         if subset == "val":
@@ -261,7 +261,7 @@ def train(model, dataset_dir, subset):
     print("Train network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=20,
+                epochs=1,
                 augmentation=augmentation,
                 layers='heads')
 
