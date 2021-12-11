@@ -69,7 +69,7 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/nucleus/")
 VAL_IMAGE_IDS = [
   'TCGA-AR-A1AK-01Z-00-DX1', 
   'TCGA-18-5592-01Z-00-DX1', 
-  'TCGA-NH-A8F7-01A-01-TS1'
+  'TCGA-NH-A8F7-01A-01-TS1',
 ]
 
 
