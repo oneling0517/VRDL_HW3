@@ -42,6 +42,7 @@ import datetime
 import numpy as np
 import skimage.io
 from imgaug import augmenters as iaa
+from pycocotools import mask
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
@@ -263,8 +264,8 @@ def train(model, dataset_dir, subset):
     # Image augmentation
     # http://imgaug.readthedocs.io/en/latest/source/augmenters.html
     augmentation = iaa.SomeOf((0, 2), [
-        iaa.Fliplr(0.5),
-        iaa.Flipud(0.5),
+        #iaa.Fliplr(0.5),
+        #iaa.Flipud(0.5),
         iaa.OneOf([iaa.Affine(rotate=90),
                    iaa.Affine(rotate=180),
                    iaa.Affine(rotate=270)]),
@@ -279,14 +280,14 @@ def train(model, dataset_dir, subset):
     print("Train network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=20,
+                epochs=4,
                 augmentation=augmentation,
                 layers='heads')
 
     print("Train all layers")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=20,
+                epochs=4,
                 augmentation=augmentation,
                 layers='all')
 
@@ -326,25 +327,6 @@ def rle_decode(rle, shape):
     # Reshape and transpose
     mask = mask.reshape([shape[1], shape[0]]).T
     return mask
-
-def encode(bimask):
-    if len(bimask.shape) == 3:
-        return _mask.encode(bimask)
-    elif len(bimask.shape) == 2:
-        h, w = bimask.shape
-        return _mask.encode(bimask.reshape((h, w, 1), order='F'))[0]
-
-def area(rleObjs):
-    if type(rleObjs) == list:
-        return _mask.area(rleObjs)
-    else:
-        return _mask.area([rleObjs])[0]
-
-def toBbox(rleObjs):
-    if type(rleObjs) == list:
-        return _mask.toBbox(rleObjs)
-    else:
-        return _mask.toBbox([rleObjs])[0]
 
 def mask_to_rle(image_id, mask, scores):
     "Encodes instance masks to submission format."
@@ -390,11 +372,57 @@ def detect(model, dataset_dir, subset):
     dataset.prepare()
     # Load over images
     submission = []
+    coco_result = list()
     for image_id in dataset.image_ids:
         # Load image and run detection
         image = dataset.load_image(image_id)
         # Detect objects
         r = model.detect([image], verbose=0)[0]
+        '''
+        print(image_id)
+
+        if image_id == 'TCGA-A7-A13E-01Z-00-DX1.png':
+          img_id = 1
+        elif image_id == 'TCGA-50-5931-01Z-00-DX1.png':
+          img_id = 2
+        elif image_id == 'TCGA-G2-A2EK-01A-02-TSB.png':
+          img_id = 3
+        elif image_id == 'TCGA-AY-A8YK-01A-01-TS1.png':
+          img_id = 4
+        elif image_id == 'TCGA-G9-6336-01Z-00-DX1.png':
+          img_id = 5
+        else:
+          img_id = 6
+        '''
+        coco = list()
+        img_id = image_id +1
+        #bboxlist = []
+        score = []
+        category_id = 1
+        seglist = []
+        rle = mask.encode(np.asfortranarray(np.uint8(r["masks"])))
+        seglist.append(rle)
+        #print(seglist)
+        
+        for i in range(len(seglist[0])):
+          bboxlist = []
+          bboxlist = [float(r["rois"][i][1]), float(r["rois"][i][0]), float(r["rois"][i][3] - r["rois"][i][1]), float(r["rois"][i][2] - r["rois"][i][0])]
+          seglist[0][i]["counts"] = seglist[0][i]["counts"].decode("utf-8")
+          coco = dict(
+              image_id = int(img_id),
+              bbox = bboxlist,
+              score = float(r["scores"][i]),
+              category_id = int(category_id),
+              segmentation = seglist[0][i],
+          )
+          coco_result.append(coco)
+        print(coco_result)
+
+    file_path = os.path.join(submit_dir, "answer.json")
+    json_object = json.dumps(coco_result, indent=4)
+    with open(file_path, "w") as outfile:
+      outfile.write(json_object)
+    '''
         # Encode image to RLE. Returns a string of multiple lines
         source_id = dataset.image_info[image_id]["id"]
         rle = mask_to_rle(source_id, r["masks"], r["scores"])
@@ -406,12 +434,12 @@ def detect(model, dataset_dir, subset):
             show_bbox=False, show_mask=False,
             title="Predictions")
         plt.savefig("{}/{}.png".format(submit_dir, dataset.image_info[image_id]["id"]))
-
+        '''
     # Save to csv file
-    submission = "ImageId,EncodedPixels\n" + "\n".join(submission)
-    file_path = os.path.join(submit_dir, "submit.csv")
-    with open(file_path, "w") as f:
-        f.write(submission)
+    #submission = "ImageId,EncodedPixels\n" + "\n".join(submission)
+    #with open(file_path, "w") as f:
+    #  f.write(submission)
+
     print("Saved to ", submit_dir)
 
 
