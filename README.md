@@ -63,3 +63,6 @@ python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=
 ## Inference
 
 You can click [Inference.ipynb](https://colab.research.google.com/drive/13vLcOs_x6R_ALSdEjlYYxuOcER0Xr-gd?usp=sharing).
+
+## Reference
+https://github.com/matterport/Mask_RCNN/tree/master/samples/nucleus
