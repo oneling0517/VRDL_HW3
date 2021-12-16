@@ -67,13 +67,13 @@ python3 nucleus.py train --dataset=/content/Mask_RCNN/dataset/dataset --subset=t
 ## Validation
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=last
+python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0008.h5
 ```
 
 ## Testing
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=last
+python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0008.h5
 ```
 
 ## Inference
