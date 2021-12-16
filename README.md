@@ -73,6 +73,13 @@ python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=
 ## Testing
 Use the weights from [Google Drive](https://drive.google.com/file/d/1Apj1jhAVYkVR-SDFrIpeDchNBDkPjfMd/view?usp=sharing).
 ```
+os.chdir("/content/Mask_RCNN")
+!gdown --id '1Apj1jhAVYkVR-SDFrIpeDchNBDkPjfMd' --output weights19.zip
+
+!apt-get install unzi
+!unzip -q 'weights19.zip' -d log
+```
+```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
 python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0019.h5
 ```
