@@ -378,22 +378,6 @@ def detect(model, dataset_dir, subset):
         image = dataset.load_image(image_id)
         # Detect objects
         r = model.detect([image], verbose=0)[0]
-        '''
-        print(image_id)
-
-        if image_id == 'TCGA-A7-A13E-01Z-00-DX1.png':
-          img_id = 1
-        elif image_id == 'TCGA-50-5931-01Z-00-DX1.png':
-          img_id = 2
-        elif image_id == 'TCGA-G2-A2EK-01A-02-TSB.png':
-          img_id = 3
-        elif image_id == 'TCGA-AY-A8YK-01A-01-TS1.png':
-          img_id = 4
-        elif image_id == 'TCGA-G9-6336-01Z-00-DX1.png':
-          img_id = 5
-        else:
-          img_id = 6
-        '''
         coco = list()
         img_id = image_id +1
         #bboxlist = []
@@ -416,7 +400,7 @@ def detect(model, dataset_dir, subset):
               segmentation = seglist[0][i],
           )
           coco_result.append(coco)
-        print(coco_result)
+        #print(coco_result)
 
     file_path = os.path.join(submit_dir, "answer.json")
     json_object = json.dumps(coco_result, indent=4)
