@@ -71,6 +71,7 @@ python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=
 ```
 
 ## Testing
+Use the weights from [Google Drive](https://drive.google.com/file/d/1Ca1F7BtMoRklme_HAtZBW9RmbIYThcFV/view?usp=sharing).
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
 python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0008.h5
@@ -82,3 +83,4 @@ You can click [Inference.ipynb](https://colab.research.google.com/drive/13vLcOs_
 
 ## Reference
 https://github.com/matterport/Mask_RCNN/tree/master/samples/nucleus
+https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py
