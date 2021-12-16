@@ -67,14 +67,14 @@ python3 nucleus.py train --dataset=/content/Mask_RCNN/dataset/dataset --subset=t
 ## Validation
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0006.h5
+python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0019.h5
 ```
 
 ## Testing
-Use the weights from [Google Drive](https://drive.google.com/file/d/1Ca1F7BtMoRklme_HAtZBW9RmbIYThcFV/view?usp=sharing).
+Use the weights from [Google Drive](https://drive.google.com/file/d/1Apj1jhAVYkVR-SDFrIpeDchNBDkPjfMd/view?usp=sharing).
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0006.h5
+python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0019.h5
 ```
 
 ## Inference
