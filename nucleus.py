@@ -72,6 +72,15 @@ VAL_IMAGE_IDS = [
   'TCGA-NH-A8F7-01A-01-TS1',
 ]
 
+TEST_IMAGE_IDS = [
+  'TCGA-A7-A13E-01Z-00-DX1.png',
+  'TCGA-50-5931-01Z-00-DX1.png',
+  'TCGA-G2-A2EK-01A-02-TSB.png',
+  'TCGA-AY-A8YK-01A-01-TS1.png',
+  'TCGA-G9-6336-01Z-00-DX1.png',
+  'TCGA-G9-6348-01Z-00-DX1.png',
+]
+
 
 ############################################################
 #  Configurations
@@ -182,6 +191,8 @@ class NucleusDataset(utils.Dataset):
         dataset_dir = os.path.join(dataset_dir, subset_dir)
         if subset == "val":
             image_ids = VAL_IMAGE_IDS
+        elif subset == "test":
+            image_ids = TEST_IMAGE_IDS
         else:
             # Get image ids from directory names
             image_ids = next(os.walk(dataset_dir))[1]
@@ -189,11 +200,18 @@ class NucleusDataset(utils.Dataset):
                 image_ids = list(set(image_ids) - set(VAL_IMAGE_IDS))
 
         # Add images
-        for image_id in image_ids:
-            self.add_image(
-                "nucleus",
-                image_id=image_id,
-                path=os.path.join(dataset_dir, image_id, "images/{}.png".format(image_id)))
+        if subset == "test":
+          for image_id in image_ids:
+              self.add_image(
+                  "nucleus",
+                  image_id=image_id,
+                  path=os.path.join(dataset_dir, image_id,))
+        else:
+          for image_id in image_ids:
+              self.add_image(
+                  "nucleus",
+                  image_id=image_id,
+                  path=os.path.join(dataset_dir, image_id, "images/{}.png".format(image_id)))
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
