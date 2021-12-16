@@ -54,7 +54,7 @@ os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
 python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=last
 ```
 
-## Test
+## Testing
 ```
 os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
 python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=last
