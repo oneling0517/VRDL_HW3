@@ -6,9 +6,20 @@ Click [My colab link](https://colab.research.google.com/drive/11Xs7121Fi7WiNWwiu
 
 ## Git clone my project
 ```
+os.chdir('/content')
+!git clone https://github.com/cocodataset/cocoapi.git
+os.chdir('/content/cocoapi/PythonAPI')
+python3 setup.py build_ext install
+!make
+```
+```
 !git clone https://github.com/matterport/Mask_RCNN.git
 os.chdir("/content/Mask_RCNN/samples")
 !git clone https://github.com/oneling0517/VRDL_HW3.git
+```
+Move the folder named PythonAPI in order to generate the result of coco format.
+```
+!cp -r /content/cocoapi/PythonAPI/pycocotools /content/Mask_RCNN/samples/VRDL_HW3/
 ```
 
 ## Install my requirements
@@ -31,6 +42,11 @@ pip install tensorflow-gpu==1.15.2
 I don't know why there is an error sometimes. If there is an error, you can run this again.
 ```
 pip install keras==2.0.8
+```
+We also need to install the elder version of h5py
+```
+pip uninstall h5py
+pip install h5py==2.10 -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 ## Dataset Download
 ```
