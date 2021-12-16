@@ -28,7 +28,7 @@ Install keras 2.0.8 and tensorflow 1.15.2
 pip install keras==2.0.8
 pip install tensorflow-gpu==1.15.2
 ```
-I don't know why there is an error sometimes. If there is an error last time, you can run this again.
+I don't know why there is an error sometimes. If there is an error, you can run this again.
 ```
 pip install keras==2.0.8
 ```
