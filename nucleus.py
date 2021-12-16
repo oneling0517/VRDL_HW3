@@ -327,6 +327,24 @@ def rle_decode(rle, shape):
     mask = mask.reshape([shape[1], shape[0]]).T
     return mask
 
+def encode(bimask):
+    if len(bimask.shape) == 3:
+        return _mask.encode(bimask)
+    elif len(bimask.shape) == 2:
+        h, w = bimask.shape
+        return _mask.encode(bimask.reshape((h, w, 1), order='F'))[0]
+
+def area(rleObjs):
+    if type(rleObjs) == list:
+        return _mask.area(rleObjs)
+    else:
+        return _mask.area([rleObjs])[0]
+
+def toBbox(rleObjs):
+    if type(rleObjs) == list:
+        return _mask.toBbox(rleObjs)
+    else:
+        return _mask.toBbox([rleObjs])[0]
 
 def mask_to_rle(image_id, mask, scores):
     "Encodes instance masks to submission format."
