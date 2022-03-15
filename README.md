@@ -1,4 +1,4 @@
-# VRDL_HW3
+# VRDL_HW3 - Nuclei segmentation
 
 ## The link of my Colab
 
